@@ -51,7 +51,7 @@ def main():
         if args.output
         else path.splitext(filename)[0] + "_post" + path.splitext(filename)[1]
     )
-    sub = open(filename).read()
+    sub = open(filename,errors='ignore').read()
     subs = list(srt.parse(sub))
     new_subs = merge_subs(subs)
     filter_path = (
