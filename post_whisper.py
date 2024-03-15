@@ -34,17 +34,24 @@ def get_filter_words(filename):
 def filter_subs(subs, filter_words):
     new_subs = []
     for sub in subs:
-        if not any(word in sub.content for word in filter_words):
-            new_subs.append(sub)
+        if sub.content in filter_words:
+            continue
+        if sub.content.startswith("♪") or sub.content.startswith("♫"):
+            continue
+        if sub.content.startswith("(") and sub.content.endswith(")"):
+            continue
+        if sub.content.startswith("(") and sub.content.endswith(")"):
+            continue
+        new_subs.append(sub)
     return new_subs
 
 
-def main():
+def main(arg):
     parser = argparse.ArgumentParser(description="Post handle after whisper.cpp")
     parser.add_argument("srt_file", help="srt file to post handle")
     parser.add_argument("-o", "--output", help="output file")
     parser.add_argument("-f", "--filter", help="filter file")
-    args = parser.parse_args()
+    args = parser.parse_args(arg)
     filename = args.srt_file
     new_filename = (
         args.output
@@ -64,4 +71,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    main(sys.argv[1:])
